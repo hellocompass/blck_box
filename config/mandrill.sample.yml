@@ -1,0 +1,10 @@
+default: &default
+  :username: <USERNAME>
+  :password: <PASSWORD>
+  :api_key: <API_KEY>
+
+development: *default
+
+test: *default
+
+production: *default

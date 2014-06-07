@@ -1,0 +1,11 @@
+default: &default
+  :google_id: <ID>
+  :google_secret: <SECRET>
+  :github_id: <ID>
+  :github_secret: <SECRET>
+
+test: *default
+
+development: *default
+
+production: *default

@@ -1,0 +1,13 @@
+<% binding.pry %>
+<% if object.errors.any? %>
+    <div>
+      <div>
+        Whoops! <%= pluralize(object.errors.count, "errors") %>.
+      </div>
+      <ul>
+        <% object.errors.full_messages.each do |msg| %>
+            <li>* <%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

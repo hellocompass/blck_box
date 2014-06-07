@@ -1,0 +1,12 @@
+# TODO: add FB test app
+default: &default
+  :app_id: <TEST APP KEY HERE>
+  :app_secret: <TEST APP SECRET HERE>
+
+development: *default
+
+test: *default
+
+production:
+  :app_id: <KEY HERE>
+  :app_secret: <SECRET HERE>
