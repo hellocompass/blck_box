@@ -1,6 +1,6 @@
 class UsersValidator
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  PASSWORD_MIN_LENGTH = 8
+  PASSWORD_MIN_LENGTH = 6
   PASSWORD_MAX_LENGTH = 50
 
   def self.validate(user)

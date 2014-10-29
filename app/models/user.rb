@@ -7,9 +7,9 @@ class User < ActiveRecord::Base
   before_save { self.email = email.downcase }
 
   has_many :connections
+  has_and_belongs_to_many :groups
   # has_and_belongs_to_many :roles
 
-  # TODO: move this remember token logic
   def new_remember_token
     SecureRandom.urlsafe_base64
   end
