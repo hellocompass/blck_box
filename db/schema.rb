@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029113701) do
+ActiveRecord::Schema.define(version: 20141029120117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,24 @@ ActiveRecord::Schema.define(version: 20141029113701) do
   end
 
   add_index "connections", ["user_id", "source"], name: "user_source_constraint", unique: true, where: "(((source)::text = (source)::text) AND (user_id = user_id))", using: :btree
+
+  create_table "contents", force: true do |t|
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contents", ["group_id"], name: "index_contents_on_group_id", using: :btree
+
+  create_table "contents_users", force: true do |t|
+    t.integer  "content_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contents_users", ["content_id"], name: "index_contents_users_on_content_id", using: :btree
+  add_index "contents_users", ["user_id"], name: "index_contents_users_on_user_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name"
