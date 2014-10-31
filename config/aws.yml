@@ -1,0 +1,11 @@
+development:
+  :key:
+  :secret:
+
+test:
+  :key:
+  :secret:
+
+production:
+  :key: ENV['AWS_KEY']
+  :secret: ENV['AWS_SECRET']

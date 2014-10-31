@@ -29,6 +29,11 @@ gem 'sprockets-commonjs', github: 'maccman/sprockets-commonjs'
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 gem 'therubyracer', :platforms => :ruby
 
+gem 'carrierwave'
+gem 'fog'
+gem 'carrierwave-imageoptimizer'
+gem 'mini_magick'
+
 group :production do
   gem 'rails_12factor'
 end

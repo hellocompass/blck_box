@@ -1,0 +1,11 @@
+development:
+  :key: <INSERT DEV HERE>
+  :secret: <INSERT DEV HERE>
+
+test:
+  :key:
+  :secret:
+
+production:
+  :key:
+  :secret:

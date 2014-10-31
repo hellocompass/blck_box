@@ -8,6 +8,7 @@
 /config/mandrill.secret.yml
 /config/omniauth.secret.yml
 /config/secret_token.secret.yml
+/config/aws.secret.yml
 *\/\.
 *\.DS*
 \.DS*
