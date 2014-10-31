@@ -10,6 +10,8 @@ BlackIn::Application.routes.draw do
     resources :sessions, only: [:new, :create, :destroy]
     get 'signin' => 'sessions#new', as: 'signin'
     get 'signout' => 'sessions#destroy', as: 'signout'
+
+    resources :groups, only: [:show, :create, :update]
   end
 
   get '/signin' => 'sessions#new'

@@ -19,4 +19,10 @@ class ApiController < ApplicationController
       render json: { errors: errors }, status: error_code
     end
   end
+
+  def verify_logged_in
+    unless signed_in?
+      raise BlackIn::Unauthorized.new
+    end
+  end
 end
