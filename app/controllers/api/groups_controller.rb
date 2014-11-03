@@ -5,7 +5,8 @@ class Api::GroupsController < ApiController
   before_filter :authenticate!, only: [:show, :update]
 
   def show
-    render json: @group, status: 200, serializer: GroupSerializer
+    serializer = @group.enabled ? GroupSerializer : InactiveGroupSerializer
+    render json: @group, status: 200, serializer: serializer
   end
 
   def create

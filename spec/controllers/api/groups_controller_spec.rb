@@ -7,7 +7,7 @@ describe Api::GroupsController do
   let(:user_2) { FactoryGirl.create :user, email: 'mcgonagol@hogwarts.com' }
   
   describe '#show' do
-    let(:group) { FactoryGirl.create :group, users: [user_2] }
+    let(:group) { FactoryGirl.create :group, contents: [FactoryGirl.build(:image_content)], users: [user_2] }
 
     context 'when the group exists' do
       let(:expected_json) do
@@ -15,7 +15,16 @@ describe Api::GroupsController do
           group: {
             id: group.id,
             name: group.name,
-            user_ids: [user_2.id, user.id]
+            user_ids: [user_2.id, user.id],
+            enabled: true,
+            created_at: group.created_at,
+            contents: [
+              {
+                group_id: group.id,
+                user_ids: [],
+                image_url: '/uploads/v_540x960_cutler.jpg'
+              }
+            ]
           }
         }.to_json
       end
@@ -24,16 +33,30 @@ describe Api::GroupsController do
         before do
           user.groups << group
           sign_in user
-          get :show, id: group.id
         end
 
-        it 'should return status 200' do
-          expect(response.status).to eq(200)
+        context 'and the group is active' do
+          before { get :show, id: group.id }
+
+          it 'should return status 200' do
+            expect(response.status).to eq(200)
+          end
+
+          it 'should return the group serialized json' do
+            expect(response.body).to eq(expected_json)
+          end
         end
 
-        it 'should return the group serialized json' do
-          expect(response.body).to eq(expected_json)
-        end 
+        context 'but the group is inactive' do
+          before do
+            group.update_attribute :enabled, false
+            get :show, id: group.id
+          end
+
+          it 'should return the group without the content' do
+            expect(JSON.parse(response.body)['group']['contents']).to be_nil
+          end
+        end
       end
 
       context 'and the group is NOT owned by the current user' do
@@ -132,16 +155,36 @@ describe Api::GroupsController do
       context 'when signed in as the proper user' do
         before do
           sign_in user
-          put :update, id: group.id, group: updates
-          group.reload
         end
 
-        it 'should return redirect to the group api path' do
-          expect(response).to redirect_to(api_group_path(group))
+        context 'and the group is active' do
+          before do
+            put :update, id: group.id, group: updates
+            group.reload
+          end
+
+          it 'should return redirect to the group api path' do
+            expect(response).to redirect_to(api_group_path(group))
+          end
+
+          it 'should update the group' do
+            expect(group.name).to eq('Yolo Circus')
+          end
         end
 
-        it 'should update the group' do
-          expect(group.name).to eq('Yolo Circus')
+        context 'but the group has expired' do
+          before do
+            group.update_attribute :enabled, false
+            put :update, id: group.id, group: updates
+          end
+
+          it 'should return 400' do
+            expect(response.status).to eq(400)
+          end
+
+          it 'should return an error' do
+            expect(JSON.parse(response.body)['errors'].length).to eq(1)
+          end
         end
       end
 

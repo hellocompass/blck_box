@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   has_many :connections
   has_and_belongs_to_many :groups
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :contents
   # has_and_belongs_to_many :roles
 
   def new_remember_token
