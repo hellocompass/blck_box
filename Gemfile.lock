@@ -132,6 +132,9 @@ GEM
     json (1.8.1)
     jwt (0.1.13)
       multi_json (>= 1.5)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     libv8 (3.16.14.7)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
@@ -286,6 +289,7 @@ DEPENDENCIES
   fog
   gibbon
   gon
+  kaminari
   mandrill_mailer
   mini_magick
   omniauth-facebook

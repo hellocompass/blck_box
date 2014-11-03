@@ -5,4 +5,6 @@ class Content < ActiveRecord::Base
   validates_presence_of :group
 
   mount_uploader :image, ContentImageUploader
+
+  scope :recent, lambda { order('created_at DESC') }
 end

@@ -34,6 +34,8 @@ gem 'fog'
 gem 'carrierwave-imageoptimizer'
 gem 'mini_magick'
 
+gem 'kaminari'
+
 group :production do
   gem 'rails_12factor'
 end

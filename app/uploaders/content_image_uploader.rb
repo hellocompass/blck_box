@@ -3,7 +3,7 @@ class ContentImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::ImageOptimizer
 
   process convert: "jpg"
-  process :optimize
+  process optimize: [{ quiet: true }]
 
   version :v_375x667 do
     process resize_to_fill: [375, 667]

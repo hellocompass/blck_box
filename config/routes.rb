@@ -12,6 +12,9 @@ BlackIn::Application.routes.draw do
     get 'signout' => 'sessions#destroy', as: 'signout'
 
     resources :groups, only: [:show, :create, :update]
+    scope 'groups' do
+      get ':group_id/recent' => 'contents#recent', as: 'recent_contents'
+    end
   end
 
   get '/signin' => 'sessions#new'

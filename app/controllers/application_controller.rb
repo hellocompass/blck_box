@@ -15,6 +15,9 @@ class ApplicationController < ActionController::Base
   class BlackIn::Unauthorized < StandardError; end
   rescue_from BlackIn::Unauthorized, with: :rescue_unauthorized
 
+  class BlackIn::BadRequest < StandardError; end
+  rescue_from BlackIn::BadRequest, with: :rescue_bad_request
+
   protected
 
   # TODO: add custom 404 page here
@@ -25,6 +28,10 @@ class ApplicationController < ActionController::Base
   # TODO: redirect to login page if no current user
   def rescue_unauthorized
     render nothing: true, status: 403
+  end
+
+  def rescue_bad_request
+    render nothing: true, status: 400
   end
 
   private

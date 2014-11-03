@@ -22,7 +22,8 @@ describe Api::GroupsController do
               {
                 group_id: group.id,
                 user_ids: [],
-                image_url: '/uploads/v_540x960_cutler.jpg'
+                image_url: '/uploads/v_540x960_cutler.jpg',
+                created_at: group.contents.first.created_at
               }
             ]
           }

@@ -51,7 +51,7 @@ OmniAuth.config.add_mock(
       }
     }
   }
-) 
+)
 
 RSpec.configure do |config|
   # ## Mock Framework
