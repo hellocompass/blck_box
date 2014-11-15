@@ -25,9 +25,7 @@ gem 'peek'
 gem 'peek-performance_bar'
 gem 'peek-pg'
 
-gem 'sprockets-commonjs', github: 'maccman/sprockets-commonjs'
-gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
-gem 'therubyracer', :platforms => :ruby
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'carrierwave'
 gem 'fog'

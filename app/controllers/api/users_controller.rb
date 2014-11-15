@@ -17,7 +17,7 @@ class Api::UsersController < ApiController
 
   def update
     redirect_or_err(@user, :api_user_path, 400) do
-      @user.update_attributes user_params 
+      @user.update_attributes user_params
     end
   end
 
@@ -26,7 +26,7 @@ class Api::UsersController < ApiController
   end
 
   def reset_password
-    begin 
+    begin
       ResetPassword.reset! params[:email]
       render nothing: true, status: 200
     rescue BlackIn::NotFoundError => e

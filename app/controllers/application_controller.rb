@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :bootstrap
-
   include SessionsHelper
 
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_not_found
@@ -32,12 +30,5 @@ class ApplicationController < ActionController::Base
 
   def rescue_bad_request
     render nothing: true, status: 400
-  end
-
-  private
-
-  def bootstrap
-    gon.env = Rails.env
-    gon.current_user = UserSerializer.new(current_user) if current_user
   end
 end
