@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :contents
   # has_and_belongs_to_many :roles
 
+  has_many :phone_numbers, dependent: :destroy
+  has_many :emails, dependent: :destroy
+
   def new_remember_token
     SecureRandom.urlsafe_base64
   end

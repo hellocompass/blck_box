@@ -12,7 +12,12 @@ class UsersValidator
   end
 
   def validate
-    validate_email if @user.new_record? || @user.email_changed?
+    if @user.email || !@user.pending
+      validate_email if @user.new_record? || @user.email_changed?
+    else
+      validate_phone
+    end
+
     validate_password if @user.new_record? || @user.password.present?
 
     @user
@@ -27,6 +32,12 @@ class UsersValidator
       @user.errors.add :email, 'looks like it might have a typo'
     elsif User.where(email: @user.email).first
       @user.errors.add :email, 'address is already registered.'
+    end
+  end
+
+  def validate_phone
+    if @user.phone_numbers.blank?
+      @user.errors.add :email, 'or Phone Number is required'
     end
   end
 
