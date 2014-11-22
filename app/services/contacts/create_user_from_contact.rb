@@ -8,9 +8,7 @@ module Contacts
     include Contacts
 
     def self.create(contact, options = {})
-      instance = new(contact, options)
-      instance.create(options[:pending])
-      instance.invite if options[:invite]
+      new(contact, options).create options[:pending]
     end
 
     def initialize(contact, options = {})
@@ -27,11 +25,6 @@ module Contacts
       @user.save
 
       @user
-    end
-
-    def invite(user = @user)
-      # stub
-      user
     end
 
     class PhoneNumbersProcessor

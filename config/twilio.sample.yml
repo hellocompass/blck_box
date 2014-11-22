@@ -1,0 +1,9 @@
+default: &default
+  :account_sid: <ID HERE>
+  :auth_token: <AUTH TOKEN HERE>
+
+development: *default
+
+test: *default
+
+production: *default

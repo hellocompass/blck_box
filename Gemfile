@@ -5,6 +5,8 @@ gem 'rails', '4.1.7'
 
 gem 'pg'
 
+gem 'sidekiq'
+
 gem 'gon'
 gem 'active_model_serializers', '~> 0.9.0'
 
@@ -17,6 +19,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'cancancan', '~> 1.8'
+
+gem 'twilio-ruby', '~> 3.12'
 
 gem 'gibbon'
 gem 'mandrill_mailer'

@@ -38,7 +38,7 @@ class Api::GroupsController < ApiController
   end
 
   def group_params
-    params.require(:group).permit :name, :contacts
+    params.require(:group).permit(:name).merge contacts: params[:group][:contacts]
   end
 
   def group_specific_params

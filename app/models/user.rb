@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
     digest(remember_token) == token
   end
 
+  def preferred_number
+    phone_numbers.find_by_preferred(true)
+  end
+
   private
 
   def create_remember_token

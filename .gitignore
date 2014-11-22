@@ -9,6 +9,7 @@
 /config/omniauth.secret.yml
 /config/secret_token.secret.yml
 /config/aws.secret.yml
+/config/twilio.secret.yml
 *\/\.
 *\.DS*
 \.DS*

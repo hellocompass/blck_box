@@ -36,6 +36,7 @@ module Groups
       @group.users = ([@current_user] + existing_users + fresh_users).uniq
     end
 
+    # TODO: update existing users with new emails / numbers
     def existing_users
       return [] unless existing_emails.present? || existing_numbers.present?
 
@@ -46,7 +47,9 @@ module Groups
 
     def fresh_users
       fresh_contacts.map do |contact|
-        ::Contacts::CreateUserFromContact.create contact, pending: true, invite: true
+        user = ::Contacts::CreateUserFromContact.create contact, pending: true
+        ::Contacts::InviteUser.new(user, @current_user).invite if user
+        user
       end
     end
 

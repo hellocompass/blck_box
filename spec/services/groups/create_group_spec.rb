@@ -13,6 +13,16 @@ describe Groups::CreateGroup do
     { name: 'Balligerent', contacts: contacts }
   end
 
+  class Contacts::StubInviteUser
+    def initialize(user, current_user)
+    end
+
+    def invite
+    end
+  end
+
+  before { stub_const 'Contacts::InviteUser', Contacts::StubInviteUser }
+
   describe '#create' do
     let(:new_group) { saver.instance_eval { @group } }
 
