@@ -13,13 +13,21 @@ class Api::GroupsController < ApiController
     @group = Group.new
 
     redirect_or_err @group, :api_group_path, 400 do
-      SaveGroup.save(@group, group_params)
+      Groups::CreateGroup.create(@group, group_params, current_user)
     end
+  end
+
+  def remove_user
+    # stub
+  end
+
+  def add_users
+    # stub
   end
 
   def update
     redirect_or_err @group, :api_group_path, 400 do
-      SaveGroup.save(@group, group_params)
+      @group.update_attributes group_specific_params
     end
   end
 
@@ -30,11 +38,11 @@ class Api::GroupsController < ApiController
   end
 
   def group_params
-    group_attrs = params.require(:group).permit(:name, :user_ids)
-    group_attrs[:user_ids] ||= []
-    group_attrs[:user_ids] << current_user.id
+    params.require(:group).permit :name, :contacts
+  end
 
-    group_attrs
+  def group_specific_params
+    params.require(:group).permit :name
   end
 
   def authenticate!

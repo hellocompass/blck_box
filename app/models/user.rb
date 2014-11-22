@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   validate { |user| UsersValidator.validate user }
 
   before_create :create_remember_token
-  before_save { self.email = email.downcase }
+  before_save { self.email = email.try(:downcase) }
 
   has_many :connections
   has_and_belongs_to_many :groups

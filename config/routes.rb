@@ -16,7 +16,7 @@ BlackIn::Application.routes.draw do
     get 'signin' => 'sessions#new', as: 'signin'
     get 'signout' => 'sessions#destroy', as: 'signout'
 
-    resources :users, only: [:new, :create, :show]
+    resources :users, only: [:new, :create, :show, :update]
     get 'signup' => 'users#new'
     get 'reset_password' => 'users#reset_password'
   end

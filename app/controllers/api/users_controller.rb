@@ -7,6 +7,7 @@ class Api::UsersController < ApiController
     render json: @user, status: 200
   end
 
+  # TODO: HANDLE INVITED/PENDING USERS
   def create
     @user = User.new(user_params)
 
@@ -28,7 +29,7 @@ class Api::UsersController < ApiController
   def reset_password
     begin
       ResetPassword.reset! params[:email]
-      render nothing: true, status: 200
+      render json: {}, status: 200
     rescue BlackIn::NotFoundError => e
       render json:  { errors: ['User with that email does not exist']  }, status: 404
     end
@@ -37,7 +38,14 @@ class Api::UsersController < ApiController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :username)
+    params.require(:user).permit(
+      :email,
+      :password,
+      :password_confirmation,
+      :username,
+      :phone_number,
+      :pending
+    )
   end
 
   def find_user

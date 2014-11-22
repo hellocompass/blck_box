@@ -10,6 +10,6 @@ class ContentImageUploader < CarrierWave::Uploader::Base
   end
 
   version :v_414x736 do
-    process resize_to_fill: [540, 960]
+    process resize_to_fill: [414, 736]
   end
 end

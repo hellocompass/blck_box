@@ -2,16 +2,21 @@ require 'spec_helper'
 
 describe Api::GroupsController do
   include SessionsHelper
-  
+
   let(:user) { FactoryGirl.create :user }
   let(:user_2) { FactoryGirl.create :user, email: 'mcgonagol@hogwarts.com' }
-  
+
+  before do
+    Api::GroupsController.any_instance.stub(:form_authenticity_token).
+                                       and_return('mahsecuritytoken')
+  end
+
   describe '#show' do
     let(:group) { FactoryGirl.create :group, contents: [FactoryGirl.build(:image_content)], users: [user_2] }
 
     context 'when the group exists' do
       let(:expected_json) do
-        { 
+        {
           group: {
             id: group.id,
             name: group.name,
@@ -22,11 +27,13 @@ describe Api::GroupsController do
               {
                 group_id: group.id,
                 user_ids: [],
-                image_url: '/uploads/v_540x960_cutler.jpg',
+                image_url: '/uploads/v_414x736_cutler.jpg',
                 created_at: group.contents.first.created_at
               }
             ]
-          }
+          },
+          csrf_param: 'authenticity_token',
+          csrf_token: 'mahsecuritytoken'
         }.to_json
       end
 

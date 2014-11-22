@@ -12,7 +12,7 @@ class Api::SessionsController < ApiController
 
   def create_with_omniauth
     unless request.env['omniauth.auth'] && request.env['omniauth.auth'][:credentials]
-      render nothing: true, status: 400
+      render json: {}, status: 400
       return
     end
 
@@ -23,7 +23,7 @@ class Api::SessionsController < ApiController
   end
 
   def auth_failure
-    render nothing: true, status: 400
+    render json: {}, status: 400
   end
 
   def destroy

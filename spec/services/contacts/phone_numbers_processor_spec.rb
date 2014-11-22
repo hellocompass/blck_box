@@ -2,7 +2,7 @@ require 'fast_helper'
 require 'ostruct'
 require './app/services/contacts/create_user_from_contact'
 
-class PhoneNumber < OpenStruct
+class StubPhoneNumber < OpenStruct
   def self.normalize_number(number)
     number.to_s.scan(/\d+/).join('').to_i
   end
@@ -13,6 +13,7 @@ class PhoneNumber < OpenStruct
 end
 
 describe Contacts::CreateUserFromContact::PhoneNumbersProcessor do
+  before { stub_const 'PhoneNumber', StubPhoneNumber }
   let(:numbers) do
     [
       {

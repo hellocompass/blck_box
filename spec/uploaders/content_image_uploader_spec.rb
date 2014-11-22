@@ -20,6 +20,6 @@ describe ContentImageUploader do
   end
 
   it 'should create a version optimized for iPhone 6+' do
-    expect(uploader.v_540x960).to have_dimensions(540, 960)
+    expect(uploader.v_414x736).to have_dimensions(414, 736)
   end
 end

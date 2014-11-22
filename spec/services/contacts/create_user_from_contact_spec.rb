@@ -4,7 +4,7 @@ require './app/services/contacts/create_user_from_contact'
 # NOTE: This spec is purely for unit testing logic-holding helper methods.
 # NOTE: Public methods are tested under spec/features/invite_new_user_spec.rb
 
-class Email < OpenStruct
+class StubEmail < OpenStruct
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   def self.valid_format?(email_address)
@@ -12,7 +12,7 @@ class Email < OpenStruct
   end
 end
 
-class PhoneNumber < OpenStruct
+class StubPhoneNumber < OpenStruct
   def self.normalize_number(number)
     number.to_s.scan(/\d+/).join('').to_i
   end
@@ -23,6 +23,11 @@ class PhoneNumber < OpenStruct
 end
 
 describe Contacts::CreateUserFromContact do
+  before do
+    stub_const 'Email', StubEmail
+    stub_const 'PhoneNumber', StubPhoneNumber
+  end
+
   let(:contact) do
     {
       "id" => 2,

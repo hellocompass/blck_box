@@ -2,7 +2,7 @@ require 'fast_helper'
 require 'ostruct'
 require './app/services/contacts/create_user_from_contact'
 
-class Email < OpenStruct
+class StubEmail < OpenStruct
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   def self.valid_format?(email_address)
@@ -11,6 +11,8 @@ class Email < OpenStruct
 end
 
 describe Contacts::CreateUserFromContact::EmailsProcessor do
+  before { stub_const 'Email', StubEmail }
+
   let(:emails) do
     [
       {

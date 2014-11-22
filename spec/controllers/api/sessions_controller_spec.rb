@@ -3,18 +3,23 @@ require 'spec_helper'
 describe Api::SessionsController do
   include SessionsHelper
 
+  before do
+    Api::SessionsController.any_instance.stub(:form_authenticity_token).
+                                       and_return('mahsecuritytoken')
+  end
+
   describe '#new' do
     # do nothing
-  end  
+  end
 
   describe '#create' do
     let(:user) { FactoryGirl.create :user }
     context 'with proper credentials' do
-      before do 
-        post :create, session: { 
-          email: user.email, 
-          password: FactoryGirl.attributes_for(:user)[:password] 
-        }  
+      before do
+        post :create, session: {
+          email: user.email,
+          password: FactoryGirl.attributes_for(:user)[:password]
+        }
       end
 
       it 'should sign in the user' do
@@ -26,7 +31,7 @@ describe Api::SessionsController do
         expect(token).to eq(user.digest(current_user.remember_token))
       end
     end
-    
+
     context 'without invalid credentials' do
       before { post :create, session: { email: user.email } }
 
