@@ -41,17 +41,21 @@ class UsersValidator
     end
   end
 
+  # NOTE: bcrypt gem adds errors when password and confirmation don't match
   def validate_password
     if @user.password.blank?
       @user.errors.add :password, 'can\'t be blank'
-    elsif @user.password.length < PASSWORD_MIN_LENGTH ||
-        @user.password.length > PASSWORD_MAX_LENGTH
+    elsif @user.password_confirmation.blank?
       @user.errors.add(
-          :password,
-          "must be between #{PASSWORD_MIN_LENGTH} and #{PASSWORD_MAX_LENGTH} characters"
+        :password_confirmation,
+        "is needed!"
       )
-    elsif @user.password != @user.password_confirmation
-      @user.errors.add :password, 'and confirmation do not match.'
+    elsif @user.password.length < PASSWORD_MIN_LENGTH ||
+      @user.password.length > PASSWORD_MAX_LENGTH
+      @user.errors.add(
+        :password,
+        "must be between #{PASSWORD_MIN_LENGTH} and #{PASSWORD_MAX_LENGTH} characters"
+      )
     end
   end
 end

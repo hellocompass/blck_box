@@ -9,7 +9,7 @@ class CreateUser
   end
 
   def create
-    send_welcome_email if @user.save
+    @user.save
     @user
   end
 

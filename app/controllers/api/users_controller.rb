@@ -7,13 +7,11 @@ class Api::UsersController < ApiController
     render json: @user, status: 200
   end
 
-  # TODO: HANDLE INVITED/PENDING USERS
   def create
-    @user = User.new(user_params)
+    @user = User.where(email: user_params[:email].downcase, pending: true).first
+    create_proc = get_create_proc
 
-    redirect_or_err @user, :api_user_path, 400 do
-      CreateUser.create(@user).persisted? && sign_in(@user)
-    end
+    redirect_or_err @user, :api_user_path, 400, &create_proc
   end
 
   def update
@@ -43,7 +41,6 @@ class Api::UsersController < ApiController
       :password,
       :password_confirmation,
       :username,
-      :phone_number,
       :pending
     )
   end
@@ -55,6 +52,18 @@ class Api::UsersController < ApiController
   def authenticate!
     unless signed_in? && current_user.id == params[:id].to_i
       raise BlackIn::NotFoundError.new
+    end
+  end
+
+  def get_create_proc
+    if @user
+      Proc.new do
+        @user.update_attributes(user_params.merge(pending: false)) &&
+          sign_in(@user)
+      end
+    else
+      @user = User.new(user_params)
+      Proc.new { CreateUser.create(@user).persisted? && sign_in(@user) }
     end
   end
 end

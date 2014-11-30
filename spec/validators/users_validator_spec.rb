@@ -27,7 +27,7 @@ describe UsersValidator do
 
     context 'with a bad submission' do
       before do
-       @bad_user = user.clone 
+       @bad_user = user.clone
        @bad_user.stub(:new_record?).and_return(true)
      end
 
@@ -53,35 +53,14 @@ describe UsersValidator do
       end
 
       it 'should err with a too short password' do
-        @bad_user.password = 'T3s!ttt'
+        @bad_user.password = 'T3s!t'
         UsersValidator.validate(@bad_user)
         expect(@bad_user.errors.keys.length).to eq(1)
         expect(@bad_user.errors.keys.first).to eq(:password)
       end
 
       it 'should err with a too long password' do
-        @bad_user.password = "T3!#{'a'*47}"
-        UsersValidator.validate(@bad_user)
-        expect(@bad_user.errors.keys.length).to eq(1)
-        expect(@bad_user.errors.keys.first).to eq(:password)
-      end
-
-      it 'should err without a capital letter' do
-        @bad_user.password = 'wing4rdiumlev!osa'
-        UsersValidator.validate(@bad_user)
-        expect(@bad_user.errors.keys.length).to eq(1)
-        expect(@bad_user.errors.keys.first).to eq(:password)
-      end
-
-      it 'should err without a number' do
-        @bad_user.password = 'WingardiumLev!osa'
-        UsersValidator.validate(@bad_user)
-        expect(@bad_user.errors.keys.length).to eq(1)
-        expect(@bad_user.errors.keys.first).to eq(:password)
-      end
-
-      it 'should err without a special character' do
-        @bad_user.password = 'wing4rdiumlev!osa'
+        @bad_user.password = "T3!#{'a'*48}"
         UsersValidator.validate(@bad_user)
         expect(@bad_user.errors.keys.length).to eq(1)
         expect(@bad_user.errors.keys.first).to eq(:password)
@@ -106,20 +85,12 @@ describe UsersValidator do
           # stub
         end
       end
-      
 
       it 'should err without a password_confirmation' do
         @bad_user.password_confirmation = nil
         UsersValidator.validate(@bad_user)
         expect(@bad_user.errors.keys.length).to eq(1)
-        expect(@bad_user.errors.keys.first).to eq(:password)
-      end
-
-      it 'should err when the password and password_confirmation do not match' do
-        @bad_user.password_confirmation = 'Wing4rdiumLev!os'
-        UsersValidator.validate(@bad_user)
-        expect(@bad_user.errors.keys.length).to eq(1)
-        expect(@bad_user.errors.keys.first).to eq(:password)
+        expect(@bad_user.errors.keys.first).to eq(:password_confirmation)
       end
     end
   end
