@@ -1,12 +1,5 @@
 if Rails.env == 'production'
-  omniauth_config = {
-    google_id: ENV['GOOGLE_ID'],
-    google_secret: ENV['GOOGLE_SECRET'],
-    fb_key: ENV['FACEBOOK_KEY'],
-    fb_secret: ENV['FACEBOOK_SECRET'],
-    twitter_key: ENV['TWITTER_KEY'],
-    twitter_secret: ENV['TWITTER_SECRET']
-  }
+  omniauth_config = {}
 else
   omniauth_config = {}
   fb_config = YAML.load_file(Rails.root + 'config/facebook.secret.yml')[Rails.env]

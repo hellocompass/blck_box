@@ -40,6 +40,7 @@ gem 'kaminari'
 
 group :production do
   gem 'rails_12factor'
+  gem 'unicorn'
 end
 
 group :development, :test do
@@ -47,6 +48,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'factory_girl_rails', require: false
   gem 'rspec-rails'
+  gem 'foreman'
 end
 
 group :test do
