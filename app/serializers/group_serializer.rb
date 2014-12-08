@@ -1,9 +1,6 @@
 class GroupSerializer < ActiveModel::Serializer
-  attributes :id, :name, :user_ids, :enabled, :created_at
+  attributes :id, :name, :enabled, :created_at
 
   has_many :contents, each_serializer: ContentSerializer
-
-  def user_ids
-    object.users.map(&:id)
-  end
+  has_many :users, each_serializer: UserSerializer
 end
